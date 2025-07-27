@@ -4,9 +4,17 @@ import java.sql.*;
 import java.util.*;
 
 public class AgentDAO {
+
+     private final Connection conn;
+
+    public AgentDAO(Connection conn) {
+        this.conn = conn;
+    }
+
+
     public void registerAgent(UUID id, UUID agencyId, String name, String phone, String password, java.util.Date hireDate) {
         String sql = "INSERT INTO Agents (id, agency_id, name, phone_number, password, hire_date, properties_sold) VALUES (?, ?, ?, ?, ?, ?, 0)";
-        try (Connection conn = DBConnection.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, id.toString());
             stmt.setString(2, agencyId.toString());
             stmt.setString(3, name);
@@ -21,7 +29,7 @@ public class AgentDAO {
 
     public void removeAgent(UUID agentId) {
         String sql = "DELETE FROM Agents WHERE id = ?";
-        try (Connection conn = DBConnection.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+        try ( PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, agentId.toString());
             stmt.executeUpdate();
         } catch (SQLException e) {
@@ -31,7 +39,7 @@ public class AgentDAO {
 
     public int getClosedDeals(UUID agentId) {
         String sql = "SELECT COUNT(*) AS deals FROM Properties WHERE id IN (SELECT property_id FROM Agents_Properties WHERE agent_id = ?) AND status = 'sold'";
-        try (Connection conn = DBConnection.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, agentId.toString());
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) return rs.getInt("deals");

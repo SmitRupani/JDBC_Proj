@@ -1,17 +1,37 @@
 import dao.*;
+
+import java.sql.Connection;
 import java.sql.Timestamp;
 import java.util.*;
 
 public class Main {
-    private static final Scanner scanner = new Scanner(System.in);
-    private static final AgencyDAO agencyDAO = new AgencyDAO();
-    private static final AgentDAO agentDAO = new AgentDAO();
-    private static final BuyerDAO buyerDAO = new BuyerDAO();
-    private static final PropertyDAO propertyDAO = new PropertyDAO();
-    private static final InquiryDAO inquiryDAO = new InquiryDAO();
-    private static final OfferDAO offerDAO = new OfferDAO();
+
+    // Initialize DAOs with a connection
+    private static Scanner scanner = new Scanner(System.in);
+    private static AgencyDAO agencyDAO; 
+    private static AgentDAO agentDAO;
+    private static BuyerDAO buyerDAO;
+    private static PropertyDAO propertyDAO;
+    private static InquiryDAO inquiryDAO;
+    private static OfferDAO offerDAO;
 
     public static void main(String[] args) {
+        try {
+            // Force DB connection at start
+            Connection conn = DBConnection.getConnection();
+
+            agencyDAO = new AgencyDAO(conn);
+            agentDAO = new AgentDAO(conn);
+            buyerDAO = new BuyerDAO(conn);
+            propertyDAO = new PropertyDAO(conn);
+            inquiryDAO = new InquiryDAO(conn);
+            offerDAO = new OfferDAO(conn);
+
+        } catch (Exception e) {
+            System.err.println(" Failed to connect to the database.");
+            e.printStackTrace();
+            return; // stop if no DB
+        }
         int choice;
         do {
             System.out.println("\n====== Real Estate Management System ======");
