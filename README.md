@@ -58,7 +58,7 @@ At startup, the program will ask you to input MySQL connection details:
 Enter MySQL host (default: localhost):
 Enter MySQL port (default: 3306):
 Enter database name: realestate
-Enter username: root
+Enter username: 
 Enter password:
 ```
 You can press Enter to accept the default host and port values.
@@ -69,19 +69,19 @@ You can press Enter to accept the default host and port values.
 
 ### 🧠 Features
 
-Add agencies, agents, buyers, and properties
+* Add agencies, agents, buyers, and properties
 
-Submit inquiries and offers
+* Submit inquiries and offers
 
-Search properties by keyword (full-text)
+* Search properties by keyword (full-text)
 
-View inquiries on a property from the last month
+* View inquiries on a property from the last month
 
-Get average agent response time
+* Get average agent response time
 
-Get average time on market for sold properties
+* Get average time on market for sold properties
 
-Withdraw offers and list pending ones
+* Withdraw offers and list pending ones
 
 --- 
 ### 📌 Notes
